@@ -13,6 +13,7 @@
         <Menu mnemonicParsing="false" text="Cadastro">
             <MenuItem mnemonicParsing="false" onAction="#abrirJanelaAdicionarCliente" text="Cliente"/>
             <MenuItem mnemonicParsing="false" onAction="#abrirJanelaAdicionarFornecedor" text="Fornecedor"/>
+            <MenuItem mnemonicParsing="false" onAction="#abrirJanelaAdicionarProduto" text="Produto"/>
         </Menu>
     </MenuBar>
     <AnchorPane VBox.vgrow="ALWAYS">

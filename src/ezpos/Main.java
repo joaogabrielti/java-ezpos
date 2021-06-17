@@ -2,11 +2,14 @@ package ezpos;
 
 import ezpos.daos.JDBCClienteDAO;
 import ezpos.daos.JDBCFornecedorDAO;
+import ezpos.daos.JDBCProdutoDAO;
 import ezpos.gui.control.JanelaPrincipal;
 import ezpos.repositories.ClienteRepositoryImpl;
 import ezpos.repositories.FornecedorRepositoryImpl;
+import ezpos.repositories.ProdutoRepositoryImpl;
 import ezpos.repositories.interfaces.ClienteRepository;
 import ezpos.repositories.interfaces.FornecedorRepository;
+import ezpos.repositories.interfaces.ProdutoRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,10 +24,12 @@ public class Main extends Application {
     public static final String JANELA_PRINCIPAL = "/fxml/janela_principal.fxml";
     public static final String JANELA_ADICIONAR_CLIENTE = "/fxml/janela_adicionar_cliente.fxml";
     public static final String JANELA_ADICIONAR_FORNECEDOR = "/fxml/janela_adicionar_fornecedor.fxml";
+    public static final String JANELA_ADICIONAR_PRODUTO = "/fxml/janela_adicionar_produto.fxml";
     private static StackPane janelaBase;
 
     private static ClienteRepository clienteRepository;
     private static FornecedorRepository fornecedorRepository;
+    private static ProdutoRepository produtoRepository;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -36,6 +41,7 @@ public class Main extends Application {
 
         clienteRepository = new ClienteRepositoryImpl(new JDBCClienteDAO());
         fornecedorRepository = new FornecedorRepositoryImpl(new JDBCFornecedorDAO());
+        produtoRepository = new ProdutoRepositoryImpl(new JDBCProdutoDAO());
     }
 
     @Override
@@ -72,6 +78,6 @@ public class Main extends Application {
     }
 
     private static Callback<Class<?>, Object> janelaPrincipalCallback() {
-        return (aClass) -> new JanelaPrincipal(clienteRepository, fornecedorRepository);
+        return (aClass) -> new JanelaPrincipal(clienteRepository, fornecedorRepository, produtoRepository);
     }
 }
