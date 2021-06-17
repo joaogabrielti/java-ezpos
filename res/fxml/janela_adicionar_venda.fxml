@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ezpos.gui.control.JanelaAdicionarVenda">
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Cadastro de Venda" />
+   <ComboBox fx:id="cbCliente" maxWidth="1.7976931348623157E308" promptText="Selecione o Cliente..." />
+   <ComboBox fx:id="cbFormaPagamento" maxWidth="1.7976931348623157E308" promptText="Selecione a Forma de Pagamento..." />
+   <DatePicker fx:id="dtData" maxWidth="1.7976931348623157E308" />
+   <FlowPane alignment="CENTER_RIGHT" hgap="5.0">
+      <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+      <Button defaultButton="true" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
+   </FlowPane>
+</VBox>

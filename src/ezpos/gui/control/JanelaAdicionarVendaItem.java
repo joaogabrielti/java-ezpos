@@ -1,19 +1,20 @@
 package ezpos.gui.control;
 
 import ezpos.Main;
-import ezpos.model.Compra;
-import ezpos.model.CompraItem;
 import ezpos.model.Produto;
-import ezpos.repositories.interfaces.CompraRepository;
+import ezpos.model.Venda;
+import ezpos.model.VendaItem;
 import ezpos.repositories.interfaces.ProdutoRepository;
+import ezpos.repositories.interfaces.VendaRepository;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
 import java.sql.SQLException;
 
-public class JanelaAdicionarCompraItem extends JanelaBase {
+public class JanelaAdicionarVendaItem extends JanelaBase {
     @FXML
     private ComboBox<Produto> cbProduto;
     @FXML
@@ -21,13 +22,13 @@ public class JanelaAdicionarCompraItem extends JanelaBase {
     @FXML
     private TextArea areaItens;
 
-    private final Compra compra;
-    private final CompraRepository compraRepository;
+    private final Venda venda;
+    private final VendaRepository vendaRepository;
     private final ProdutoRepository produtoRepository;
 
-    public JanelaAdicionarCompraItem(Compra compra, CompraRepository compraRepository, ProdutoRepository produtoRepository) {
-        this.compra = compra;
-        this.compraRepository = compraRepository;
+    public JanelaAdicionarVendaItem(Venda venda, VendaRepository vendaRepository, ProdutoRepository produtoRepository) {
+        this.venda = venda;
+        this.vendaRepository = vendaRepository;
         this.produtoRepository = produtoRepository;
     }
 
@@ -46,10 +47,10 @@ public class JanelaAdicionarCompraItem extends JanelaBase {
         Produto produto = cbProduto.getValue();
         double quantidade = Double.parseDouble(tfQuantidade.getText());
 
-        CompraItem item = new CompraItem(this.compra, produto, quantidade, produto.getValor());
+        VendaItem item = new VendaItem(this.venda, produto, quantidade, produto.getValor());
 
         try {
-            if (compraRepository.inserirItem(item)) {
+            if (vendaRepository.inserirItem(item)) {
                 areaItens.setText(areaItens.getText() + item + "\n");
             } else {
                 showDialogMessage(Alert.AlertType.ERROR, "Não foi possível cadastrar o item!");
@@ -62,7 +63,7 @@ public class JanelaAdicionarCompraItem extends JanelaBase {
 
     @FXML
     private void finalizarCompra() {
-        showDialogMessage(Alert.AlertType.INFORMATION, "Compra realizada com sucesso!");
+        showDialogMessage(Alert.AlertType.INFORMATION, "Venda realizada com sucesso!");
         Main.voltaJanelaPrincipal();
     }
 }

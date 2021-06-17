@@ -5,8 +5,9 @@ import ezpos.db.ConnectionManager;
 import ezpos.model.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCClienteDAO implements ClienteDAO {
@@ -18,7 +19,28 @@ public class JDBCClienteDAO implements ClienteDAO {
 
     @Override
     public List<Cliente> listar() throws SQLException {
-        return null;
+        ArrayList<Cliente> lista = new ArrayList<>();
+
+        Connection conn = ConnectionManager.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(LISTAR);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String cpfCnpj = rs.getString("cpf_cnpj");
+            String nome = rs.getString("nome");
+            String endereco = rs.getString("endereco");
+            String telefone = rs.getString("telefone");
+            String email = rs.getString("email");
+
+            lista.add(new Cliente(id, cpfCnpj, nome, endereco, telefone, email));
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return lista;
     }
 
     @Override
