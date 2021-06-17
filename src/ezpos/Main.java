@@ -1,13 +1,16 @@
 package ezpos;
 
 import ezpos.daos.JDBCClienteDAO;
+import ezpos.daos.JDBCCompraDAO;
 import ezpos.daos.JDBCFornecedorDAO;
 import ezpos.daos.JDBCProdutoDAO;
 import ezpos.gui.control.JanelaPrincipal;
 import ezpos.repositories.ClienteRepositoryImpl;
+import ezpos.repositories.CompraRepositoryImpl;
 import ezpos.repositories.FornecedorRepositoryImpl;
 import ezpos.repositories.ProdutoRepositoryImpl;
 import ezpos.repositories.interfaces.ClienteRepository;
+import ezpos.repositories.interfaces.CompraRepository;
 import ezpos.repositories.interfaces.FornecedorRepository;
 import ezpos.repositories.interfaces.ProdutoRepository;
 import javafx.application.Application;
@@ -25,11 +28,14 @@ public class Main extends Application {
     public static final String JANELA_ADICIONAR_CLIENTE = "/fxml/janela_adicionar_cliente.fxml";
     public static final String JANELA_ADICIONAR_FORNECEDOR = "/fxml/janela_adicionar_fornecedor.fxml";
     public static final String JANELA_ADICIONAR_PRODUTO = "/fxml/janela_adicionar_produto.fxml";
+    public static final String JANELA_ADICIONAR_COMPRA = "/fxml/janela_adicionar_compra.fxml";
+    public static final String JANELA_ADICIONAR_COMPRA_ITEM = "/fxml/janela_adicionar_compra_item.fxml";
     private static StackPane janelaBase;
 
     private static ClienteRepository clienteRepository;
     private static FornecedorRepository fornecedorRepository;
     private static ProdutoRepository produtoRepository;
+    private static CompraRepository compraRepository;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -42,6 +48,7 @@ public class Main extends Application {
         clienteRepository = new ClienteRepositoryImpl(new JDBCClienteDAO());
         fornecedorRepository = new FornecedorRepositoryImpl(new JDBCFornecedorDAO());
         produtoRepository = new ProdutoRepositoryImpl(new JDBCProdutoDAO());
+        compraRepository = new CompraRepositoryImpl(new JDBCCompraDAO());
     }
 
     @Override
@@ -78,6 +85,6 @@ public class Main extends Application {
     }
 
     private static Callback<Class<?>, Object> janelaPrincipalCallback() {
-        return (aClass) -> new JanelaPrincipal(clienteRepository, fornecedorRepository, produtoRepository);
+        return (aClass) -> new JanelaPrincipal(clienteRepository, fornecedorRepository, produtoRepository, compraRepository);
     }
 }

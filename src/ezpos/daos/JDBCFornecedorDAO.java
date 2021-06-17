@@ -3,10 +3,11 @@ package ezpos.daos;
 import ezpos.daos.interfaces.FornecedorDAO;
 import ezpos.db.ConnectionManager;
 import ezpos.model.Fornecedor;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCFornecedorDAO implements FornecedorDAO {
@@ -18,7 +19,28 @@ public class JDBCFornecedorDAO implements FornecedorDAO {
 
     @Override
     public List<Fornecedor> listar() throws SQLException {
-        return null;
+        ArrayList<Fornecedor> lista = new ArrayList<>();
+
+        Connection conn = ConnectionManager.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(LISTAR);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String cpfCnpj = rs.getString("cpf_cnpj");
+            String nome = rs.getString("nome");
+            String endereco = rs.getString("endereco");
+            String telefone = rs.getString("telefone");
+            String email = rs.getString("email");
+
+            lista.add(new Fornecedor(id, cpfCnpj, nome, endereco, telefone, email));
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return lista;
     }
 
     @Override

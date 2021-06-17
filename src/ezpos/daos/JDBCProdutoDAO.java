@@ -3,10 +3,11 @@ package ezpos.daos;
 import ezpos.daos.interfaces.ProdutoDAO;
 import ezpos.db.ConnectionManager;
 import ezpos.model.Produto;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCProdutoDAO implements ProdutoDAO {
@@ -18,7 +19,27 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 
     @Override
     public List<Produto> listar() throws SQLException {
-        return null;
+        ArrayList<Produto> lista = new ArrayList<>();
+
+        Connection conn = ConnectionManager.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(LISTAR);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String nome = rs.getString("nome");
+            String descricao = rs.getString("descricao");
+            double quantidade = rs.getDouble("quantidade");
+            double valor = rs.getDouble("valor");
+
+            lista.add(new Produto(id, nome, descricao, quantidade, valor));
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return lista;
     }
 
     @Override
