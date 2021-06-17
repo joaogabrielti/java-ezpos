@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="ezpos.view.JanelaPrincipal">
-    <Label text="Hello, World!"/>
-</GridPane>
+<VBox fx:controller="ezpos.gui.control.JanelaPrincipal" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+    <MenuBar VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="Cadastro">
+            <MenuItem mnemonicParsing="false" onAction="#abrirJanelaAdicionarCliente" text="Cliente"/>
+            <MenuItem mnemonicParsing="false" onAction="#abrirJanelaAdicionarFornecedor" text="Fornecedor"/>
+        </Menu>
+    </MenuBar>
+    <AnchorPane VBox.vgrow="ALWAYS">
+        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;"
+               text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+    </AnchorPane>
+</VBox>

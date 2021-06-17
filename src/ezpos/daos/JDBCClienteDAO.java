@@ -1,7 +1,10 @@
 package ezpos.daos;
 
 import ezpos.daos.interfaces.ClienteDAO;
+import ezpos.db.ConnectionManager;
 import ezpos.model.Cliente;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -24,7 +27,21 @@ public class JDBCClienteDAO implements ClienteDAO {
 
     @Override
     public boolean inserir(Cliente cliente) throws SQLException {
-        return false;
+        Connection conn = ConnectionManager.getConnection();
+
+        PreparedStatement stmt = conn.prepareStatement(INSERIR);
+        stmt.setString(1, cliente.getCpfCnpj());
+        stmt.setString(2, cliente.getNome());
+        stmt.setString(3, cliente.getEndereco());
+        stmt.setString(4, cliente.getTelefone());
+        stmt.setString(5, cliente.getEmail());
+
+        int result = stmt.executeUpdate();
+
+        stmt.close();
+        conn.close();
+
+        return result == 1;
     }
 
     @Override

@@ -8,18 +8,19 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://C:/Java/OpenJFX/lib" />
+          <root url="file://C:/Java/OpenJFX16/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://C:/Java/OpenJFX/lib" />
+          <root url="file://C:/Java/OpenJFX16/lib" />
         </SOURCES>
-        <jarDirectory url="file://C:/Java/OpenJFX/lib" recursive="false" />
-        <jarDirectory url="file://C:/Java/OpenJFX/lib" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://C:/Java/OpenJFX16/lib" recursive="false" />
+        <jarDirectory url="file://C:/Java/OpenJFX16/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="mysql-connector-java-8.0.25" level="project" />
   </component>
 </module>

@@ -1,10 +1,12 @@
 package ezpos;
 
 import ezpos.daos.JDBCClienteDAO;
-import ezpos.daos.interfaces.ClienteDAO;
+import ezpos.daos.JDBCFornecedorDAO;
 import ezpos.gui.control.JanelaPrincipal;
 import ezpos.repositories.ClienteRepositoryImpl;
+import ezpos.repositories.FornecedorRepositoryImpl;
 import ezpos.repositories.interfaces.ClienteRepository;
+import ezpos.repositories.interfaces.FornecedorRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,10 +19,12 @@ import javafx.util.Callback;
 // VM Options: --module-path "C:\Java\OpenJFX\lib" --add-modules javafx.controls,javafx.fxml
 public class Main extends Application {
     public static final String JANELA_PRINCIPAL = "/fxml/janela_principal.fxml";
+    public static final String JANELA_ADICIONAR_CLIENTE = "/fxml/janela_adicionar_cliente.fxml";
+    public static final String JANELA_ADICIONAR_FORNECEDOR = "/fxml/janela_adicionar_fornecedor.fxml";
     private static StackPane janelaBase;
 
     private static ClienteRepository clienteRepository;
-    private static ClienteDAO clienteDAO;
+    private static FornecedorRepository fornecedorRepository;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -30,12 +34,12 @@ public class Main extends Application {
     public void init() throws Exception {
         super.init();
 
-        clienteDAO = new JDBCClienteDAO();
-        clienteRepository = new ClienteRepositoryImpl(clienteDAO);
+        clienteRepository = new ClienteRepositoryImpl(new JDBCClienteDAO());
+        fornecedorRepository = new FornecedorRepositoryImpl(new JDBCFornecedorDAO());
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         janelaBase = new StackPane();
         stage.setScene(new Scene(janelaBase, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE));
         stage.setTitle("EZPOS - Easy Point of Sale - 2021");
@@ -63,7 +67,11 @@ public class Main extends Application {
         }
     }
 
+    public static void voltaJanelaPrincipal() {
+        alterarJanela(JANELA_PRINCIPAL, janelaPrincipalCallback());
+    }
+
     private static Callback<Class<?>, Object> janelaPrincipalCallback() {
-        return (aClass) -> new JanelaPrincipal();
+        return (aClass) -> new JanelaPrincipal(clienteRepository, fornecedorRepository);
     }
 }
