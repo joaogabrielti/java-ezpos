@@ -23,6 +23,7 @@ public class Main extends Application {
     public static final String JANELA_ADICIONAR_COMPRA_ITEM = "/fxml/janela_adicionar_compra_item.fxml";
     public static final String JANELA_ADICIONAR_VENDA = "/fxml/janela_adicionar_venda.fxml";
     public static final String JANELA_ADICIONAR_VENDA_ITEM = "/fxml/janela_adicionar_venda_item.fxml";
+    public static final String JANELA_RELATORIO_ESTOQUE = "/fxml/janela_relatorio_estoque.fxml";
     private static StackPane janelaBase;
 
     private static ClienteRepository clienteRepository;

@@ -1,5 +1,7 @@
 package ezpos.model;
 
+import java.util.Locale;
+
 public class Produto {
     private int id;
     private String nome;
@@ -60,6 +62,13 @@ public class Produto {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public String getEstoqueString() {
+        return this.getId() +
+                "\t" + this.getNome() +
+                "\t" + String.format(Locale.getDefault(), "%.2f", this.getQuantidade()) +
+                "\n";
     }
 
     @Override

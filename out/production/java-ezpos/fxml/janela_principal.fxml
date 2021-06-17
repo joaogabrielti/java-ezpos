@@ -21,6 +21,9 @@
         <Menu mnemonicParsing="false" text="Venda">
             <MenuItem mnemonicParsing="false" onAction="#abrirJanelaAdicionarVenda" text="Nova Venda"/>
         </Menu>
+        <Menu mnemonicParsing="false" text="Relatório">
+            <MenuItem mnemonicParsing="false" onAction="#abrirJanelaRelatorioEstoque" text="Estoque"/>
+        </Menu>
     </MenuBar>
     <AnchorPane VBox.vgrow="ALWAYS">
         <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;"

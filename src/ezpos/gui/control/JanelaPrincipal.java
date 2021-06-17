@@ -2,6 +2,7 @@ package ezpos.gui.control;
 
 import ezpos.Main;
 import ezpos.repositories.interfaces.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class JanelaPrincipal extends JanelaBase {
@@ -42,5 +43,10 @@ public class JanelaPrincipal extends JanelaBase {
     @FXML
     private void abrirJanelaAdicionarVenda() {
         Main.alterarJanela(Main.JANELA_ADICIONAR_VENDA, aClass -> new JanelaAdicionarVenda(vendaRepository, clienteRepository, produtoRepository));
+    }
+
+    @FXML
+    private void abrirJanelaRelatorioEstoque() {
+        Main.alterarJanela(Main.JANELA_RELATORIO_ESTOQUE, aClass -> new JanelaRelatorioEstoque(produtoRepository));
     }
 }
