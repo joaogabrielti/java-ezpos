@@ -1,0 +1,10 @@
+Semana 13-19/06
+
+Foi desenvolvido o basico do sistema.
+
+- Cadastro de Clientes
+- Cadastro de Fornecedores
+- Cadastro de Produtos
+- Realização de Compra
+- Realização de Venda
+- Relatório de Estoque
