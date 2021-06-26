@@ -2,7 +2,6 @@ package ezpos.gui.control;
 
 import ezpos.Main;
 import ezpos.repositories.interfaces.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class JanelaPrincipal extends JanelaBase {

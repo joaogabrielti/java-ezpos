@@ -1,6 +1,7 @@
 package ezpos.gui.control;
 
 import ezpos.Main;
+import ezpos.auth.Auth;
 import ezpos.model.Compra;
 import ezpos.model.Fornecedor;
 import ezpos.repositories.interfaces.CompraRepository;
@@ -12,6 +13,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Collections;
 
 public class JanelaAdicionarCompra extends JanelaBase {
     @FXML
@@ -45,7 +47,7 @@ public class JanelaAdicionarCompra extends JanelaBase {
         Fornecedor fornecedor = cbFornecedor.getValue();
         LocalDate data = dtData.getValue();
 
-        Compra compra = new Compra(fornecedor, 0, data);
+        Compra compra = new Compra(fornecedor, Auth.getUsuarioAutenticado(), 0, data, Collections.emptyList());
 
         int id = -1;
         try {

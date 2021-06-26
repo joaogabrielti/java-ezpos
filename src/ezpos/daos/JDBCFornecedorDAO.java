@@ -45,7 +45,29 @@ public class JDBCFornecedorDAO implements FornecedorDAO {
 
     @Override
     public Fornecedor buscar(int id) throws SQLException {
-        return null;
+        Connection conn = ConnectionManager.getConnection();
+
+        PreparedStatement stmt = conn.prepareStatement(BUSCAR);
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+
+        Fornecedor fornecedor = null;
+        if (rs.next()) {
+            String cpfCnpj = rs.getString("cpf_cnpj");
+            String nome = rs.getString("nome");
+            String endereco = rs.getString("endereco");
+            String telefone = rs.getString("telefone");
+            String email = rs.getString("email");
+
+            fornecedor = new Fornecedor(id, cpfCnpj, nome, endereco, telefone, email);
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return fornecedor;
     }
 
     @Override
@@ -69,11 +91,36 @@ public class JDBCFornecedorDAO implements FornecedorDAO {
 
     @Override
     public boolean editar(Fornecedor fornecedor) throws SQLException {
-        return false;
+        Connection conn = ConnectionManager.getConnection();
+
+        PreparedStatement stmt = conn.prepareStatement(EDITAR);
+        stmt.setString(1, fornecedor.getCpfCnpj());
+        stmt.setString(2, fornecedor.getNome());
+        stmt.setString(3, fornecedor.getEndereco());
+        stmt.setString(4, fornecedor.getTelefone());
+        stmt.setString(5, fornecedor.getEmail());
+        stmt.setInt(6, fornecedor.getId());
+
+        int result = stmt.executeUpdate();
+
+        stmt.close();
+        conn.close();
+
+        return result == 1;
     }
 
     @Override
     public boolean excluir(Fornecedor fornecedor) throws SQLException {
-        return false;
+        Connection conn = ConnectionManager.getConnection();
+
+        PreparedStatement stmt = conn.prepareStatement(EXCLUIR);
+        stmt.setInt(1, fornecedor.getId());
+
+        int result = stmt.executeUpdate();
+
+        stmt.close();
+        conn.close();
+
+        return result == 1;
     }
 }

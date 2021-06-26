@@ -2,27 +2,34 @@ package ezpos.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Venda {
     private int id;
     private Cliente cliente;
+    private Usuario usuario;
     private double valor;
     private String formaPagamento;
     private LocalDate data;
+    private List<VendaItem> items;
 
-    public Venda(int id, Cliente cliente, double valor, String formaPagamento, LocalDate data) {
+    public Venda(int id, Cliente cliente, Usuario usuario, double valor, String formaPagamento, LocalDate data, List<VendaItem> items) {
         this.id = id;
         this.cliente = cliente;
+        this.usuario = usuario;
         this.valor = valor;
         this.formaPagamento = formaPagamento;
         this.data = data;
+        this.items = items;
     }
 
-    public Venda(Cliente cliente, double valor, String formaPagamento, LocalDate data) {
+    public Venda(Cliente cliente, Usuario usuario, double valor, String formaPagamento, LocalDate data, List<VendaItem> items) {
         this.cliente = cliente;
+        this.usuario = usuario;
         this.valor = valor;
         this.formaPagamento = formaPagamento;
         this.data = data;
+        this.items = items;
     }
 
     public int getId() {
@@ -39,6 +46,14 @@ public class Venda {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public double getValor() {
@@ -63,6 +78,14 @@ public class Venda {
 
     public void setData(LocalDate data) {
         this.data = data;
+    }
+
+    public List<VendaItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<VendaItem> items) {
+        this.items = items;
     }
 
     @Override

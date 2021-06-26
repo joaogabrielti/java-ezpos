@@ -44,7 +44,28 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 
     @Override
     public Produto buscar(int id) throws SQLException {
-        return null;
+        Connection conn = ConnectionManager.getConnection();
+
+        PreparedStatement stmt = conn.prepareStatement(BUSCAR);
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+
+        Produto produto = null;
+        if (rs.next()) {
+            String nome = rs.getString("nome");
+            String descricao = rs.getString("descricao");
+            double quantidade = rs.getDouble("quantidade");
+            double valor = rs.getDouble("valor");
+
+            produto = new Produto(id, nome, descricao, quantidade, valor);
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return produto;
     }
 
     @Override
@@ -66,11 +87,34 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 
     @Override
     public boolean editar(Produto produto) throws SQLException {
-        return false;
+        Connection conn = ConnectionManager.getConnection();
+
+        PreparedStatement stmt = conn.prepareStatement(EDITAR);
+        stmt.setString(1, produto.getNome());
+        stmt.setString(2, produto.getDescricao());
+        stmt.setDouble(3, produto.getValor());
+        stmt.setInt(4, produto.getId());
+
+        int result = stmt.executeUpdate();
+
+        stmt.close();
+        conn.close();
+
+        return result == 1;
     }
 
     @Override
     public boolean excluir(Produto produto) throws SQLException {
-        return false;
+        Connection conn = ConnectionManager.getConnection();
+
+        PreparedStatement stmt = conn.prepareStatement(EXCLUIR);
+        stmt.setInt(1, produto.getId());
+
+        int result = stmt.executeUpdate();
+
+        stmt.close();
+        conn.close();
+
+        return result == 1;
     }
 }

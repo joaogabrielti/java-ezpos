@@ -1,6 +1,7 @@
 package ezpos.gui.control;
 
 import ezpos.Main;
+import ezpos.auth.Auth;
 import ezpos.model.Cliente;
 import ezpos.model.Venda;
 import ezpos.repositories.interfaces.ClienteRepository;
@@ -14,6 +15,7 @@ import javafx.scene.control.DatePicker;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class JanelaAdicionarVenda extends JanelaBase {
     @FXML
@@ -56,7 +58,7 @@ public class JanelaAdicionarVenda extends JanelaBase {
         String formaPagamento = cbFormaPagamento.getValue();
         LocalDate data = dtData.getValue();
 
-        Venda venda = new Venda(cliente, 0, formaPagamento, data);
+        Venda venda = new Venda(cliente, Auth.getUsuarioAutenticado(), 0, formaPagamento, data, Collections.emptyList());
 
         int id = -1;
         try {
