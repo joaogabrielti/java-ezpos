@@ -8,3 +8,9 @@ Foi desenvolvido o basico do sistema.
 - Realização de Compra
 - Realização de Venda
 - Relatório de Estoque
+
+Semana 20-26/06
+
+- Finalização da implementação dos DAOs
+- Implementação da Autenticação de Usuário
+- Melhorias no código
