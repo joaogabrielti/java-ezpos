@@ -46,7 +46,7 @@ public class JanelaAdicionarCompraItem extends JanelaBase {
         Produto produto = cbProduto.getValue();
         double quantidade = Double.parseDouble(tfQuantidade.getText());
 
-        CompraItem item = new CompraItem(this.compra, produto, quantidade, produto.getValor());
+        CompraItem item = new CompraItem(this.compra, produto, quantidade, produto.getValorCompra());
 
         try {
             if (compraRepository.inserirItem(item)) {

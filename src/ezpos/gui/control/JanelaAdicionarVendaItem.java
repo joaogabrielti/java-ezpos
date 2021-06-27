@@ -46,7 +46,7 @@ public class JanelaAdicionarVendaItem extends JanelaBase {
         Produto produto = cbProduto.getValue();
         double quantidade = Double.parseDouble(tfQuantidade.getText());
 
-        VendaItem item = new VendaItem(this.venda, produto, quantidade, produto.getValor());
+        VendaItem item = new VendaItem(this.venda, produto, quantidade, produto.getValorVenda());
 
         try {
             if (vendaRepository.inserirItem(item)) {

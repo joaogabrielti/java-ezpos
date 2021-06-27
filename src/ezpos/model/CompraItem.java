@@ -52,6 +52,6 @@ public class CompraItem {
         return this.getProduto().getNome() + " (R$ " + this.getValor() +
                 ") - " + this.getQuantidade() + " unidades." +
                 " Subtotal: R$ "
-                + String.format(Locale.getDefault(), "%.2f", this.getQuantidade() * this.getProduto().getValor());
+                + String.format(Locale.getDefault(), "%.2f", this.getQuantidade() * this.getProduto().getValorCompra());
     }
 }

@@ -1,31 +1,19 @@
 package ezpos;
 
 import ezpos.auth.Auth;
-import ezpos.auth.Hash;
 import ezpos.daos.*;
 import ezpos.daos.interfaces.*;
 import ezpos.gui.control.JanelaPrincipal;
-import ezpos.model.Usuario;
 import ezpos.repositories.*;
 import ezpos.repositories.interfaces.*;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.Pair;
-import java.sql.SQLException;
-import java.util.Objects;
-import java.util.Optional;
 
 // VM Options: --module-path "C:\Java\OpenJFX\lib" --add-modules javafx.controls,javafx.fxml
 public class Main extends Application {
@@ -72,7 +60,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        abrirJanelaFazerLogin(stage);
+        Auth.abrirJanelaFazerLogin(stage);
     }
 
     @Override
@@ -80,77 +68,12 @@ public class Main extends Application {
         super.stop();
     }
 
-    private void abrirJanelaFazerLogin(Stage stage) {
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("EZPOS - Easy Point of Sale - 2021");
-        dialog.setHeaderText("Entrar no Sistema");
-
-        dialog.setGraphic(new ImageView(Objects.requireNonNull(this.getClass().getResource("/assets/login.png")).toString()));
-
-        ButtonType loginButtonType = new ButtonType("Entrar", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
-
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
-
-        TextField username = new TextField();
-        username.setPromptText("Usuário");
-        PasswordField password = new PasswordField();
-        password.setPromptText("Senha");
-
-        grid.add(new Label("Usuário:"), 0, 0);
-        grid.add(username, 1, 0);
-        grid.add(new Label("Senha:"), 0, 1);
-        grid.add(password, 1, 1);
-
-        Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
-        loginButton.setDisable(true);
-
-        username.textProperty().addListener((observable, oldValue, newValue) -> {
-            loginButton.setDisable(newValue.trim().isEmpty());
-        });
-
-        dialog.getDialogPane().setContent(grid);
-
-        Platform.runLater(username::requestFocus);
-
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == loginButtonType) {
-                return new Pair<>(username.getText(), password.getText());
-            }
-            return null;
-        });
-
-        Optional<Pair<String, String>> result = dialog.showAndWait();
-
-        result.ifPresent(usernamePassword -> {
-            String usuario = usernamePassword.getKey();
-
-            try {
-                String senha = Hash.sha256(usernamePassword.getValue());
-
-                Usuario u = getUsuarioDAO().autenticar(usuario, senha);
-
-                if (u != null) {
-                    Auth.setUsuarioAutenticado(u);
-
-                    janelaBase = new StackPane();
-                    stage.setScene(new Scene(janelaBase, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE));
-                    stage.setTitle("EZPOS - Easy Point of Sale - 2021");
-                    alterarJanela(Main.JANELA_PRINCIPAL, janelaPrincipalCallback());
-                    stage.show();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Senha incorreta!");
-                    alert.showAndWait();
-
-                    abrirJanelaFazerLogin(stage);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
+    public static void iniciarJanelaPrincipal(Stage stage) {
+        janelaBase = new StackPane();
+        stage.setScene(new Scene(janelaBase, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE));
+        stage.setTitle("EZPOS - Easy Point of Sale - 2021");
+        alterarJanela(Main.JANELA_PRINCIPAL, janelaPrincipalCallback());
+        stage.show();
     }
 
     public static void alterarJanela(String fxml, Callback<Class<?>, Object> controllerFactory) {

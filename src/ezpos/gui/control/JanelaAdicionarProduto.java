@@ -14,7 +14,9 @@ public class JanelaAdicionarProduto extends JanelaBase {
     @FXML
     private TextField tfDescricao;
     @FXML
-    private TextField tfValor;
+    private TextField tfValorCompra;
+    @FXML
+    private TextField tfValorVenda;
 
     private final ProdutoRepository produtoRepository;
 
@@ -24,24 +26,24 @@ public class JanelaAdicionarProduto extends JanelaBase {
 
     @FXML
     private void salvar() {
-        String nome = tfNome.getText();
-        String descricao = tfDescricao.getText();
-        double valor = Double.parseDouble(tfValor.getText());
-
-        Produto produto = new Produto(nome, descricao, 0, valor);
-
         try {
+            String nome = tfNome.getText();
+            String descricao = tfDescricao.getText();
+            double valor_compra = Double.parseDouble(tfValorCompra.getText());
+            double valor_venda = Double.parseDouble(tfValorVenda.getText());
+
+            Produto produto = new Produto(nome, descricao, 0, valor_compra, valor_venda);
+
             if (produtoRepository.inserir(produto)) {
                 showDialogMessage(Alert.AlertType.INFORMATION, "Produto cadastrado com sucesso!");
+                Main.voltaJanelaPrincipal();
             } else {
                 showDialogMessage(Alert.AlertType.ERROR, "Não foi possível cadastrar o produto!");
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NumberFormatException e) {
             e.printStackTrace();
             showDialogMessage(Alert.AlertType.ERROR, e.getMessage());
         }
-
-        Main.voltaJanelaPrincipal();
     }
 
     @FXML

@@ -7,21 +7,24 @@ public class Produto {
     private String nome;
     private String descricao;
     private double quantidade;
-    private double valor;
+    private double valor_compra;
+    private double valor_venda;
 
-    public Produto(int id, String nome, String descricao, double quantidade, double valor) {
+    public Produto(int id, String nome, String descricao, double quantidade, double valor_compra, double valor_venda) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.quantidade = quantidade;
-        this.valor = valor;
+        this.valor_compra = valor_compra;
+        this.valor_venda = valor_venda;
     }
 
-    public Produto(String nome, String descricao, double quantidade, double valor) {
+    public Produto(String nome, String descricao, double quantidade, double valor_compra, double valor_venda) {
         this.nome = nome;
         this.descricao = descricao;
         this.quantidade = quantidade;
-        this.valor = valor;
+        this.valor_compra = valor_compra;
+        this.valor_venda = valor_venda;
     }
 
     public int getId() {
@@ -56,12 +59,20 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public double getValor() {
-        return valor;
+    public double getValorCompra() {
+        return valor_compra;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void setValorCompra(double valor_compra) {
+        this.valor_compra = valor_compra;
+    }
+
+    public double getValorVenda() {
+        return valor_venda;
+    }
+
+    public void setValorVenda(double valor_venda) {
+        this.valor_venda = valor_venda;
     }
 
     public String getEstoqueString() {
