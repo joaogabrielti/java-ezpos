@@ -21,17 +21,17 @@ public class JanelaPrincipal extends JanelaBase {
 
     @FXML
     private void abrirJanelaAdicionarCliente() {
-        Main.alterarJanela(Main.JANELA_ADICIONAR_CLIENTE, aClass -> new JanelaAdicionarCliente(clienteRepository));
+        Main.alterarJanela(Main.JANELA_CLIENTES, aClass -> new JanelaClientes(clienteRepository));
     }
 
     @FXML
     private void abrirJanelaAdicionarFornecedor() {
-        Main.alterarJanela(Main.JANELA_ADICIONAR_FORNECEDOR, aClass -> new JanelaAdicionarFornecedor(fornecedorRepository));
+        Main.alterarJanela(Main.JANELA_FORNECEDORES, aClass -> new JanelaFornecedores(fornecedorRepository));
     }
 
     @FXML
     private void abrirJanelaAdicionarProduto() {
-        Main.alterarJanela(Main.JANELA_ADICIONAR_PRODUTO, aClass -> new JanelaAdicionarProduto(produtoRepository));
+        Main.alterarJanela(Main.JANELA_PRODUTOS, aClass -> new JanelaProdutos(produtoRepository));
     }
 
     @FXML

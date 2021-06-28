@@ -19,9 +19,21 @@ public class JanelaAdicionarProduto extends JanelaBase {
     private TextField tfValorVenda;
 
     private final ProdutoRepository produtoRepository;
+    private final Produto produtoOriginal;
 
-    public JanelaAdicionarProduto(ProdutoRepository produtoRepository) {
+    public JanelaAdicionarProduto(ProdutoRepository produtoRepository, Produto produtoOriginal) {
         this.produtoRepository = produtoRepository;
+        this.produtoOriginal = produtoOriginal;
+    }
+
+    @FXML
+    private void initialize() {
+        if (produtoOriginal != null) {
+            tfNome.setText(produtoOriginal.getNome());
+            tfDescricao.setText(produtoOriginal.getDescricao());
+            tfValorCompra.setText(Double.toString(produtoOriginal.getValorCompra()));
+            tfValorVenda.setText(Double.toString(produtoOriginal.getValorVenda()));
+        }
     }
 
     @FXML
@@ -33,13 +45,25 @@ public class JanelaAdicionarProduto extends JanelaBase {
             double valor_venda = Double.parseDouble(tfValorVenda.getText());
 
             Produto produto = new Produto(nome, descricao, 0, valor_compra, valor_venda);
-
-            if (produtoRepository.inserir(produto)) {
-                showDialogMessage(Alert.AlertType.INFORMATION, "Produto cadastrado com sucesso!");
-                Main.voltaJanelaPrincipal();
-            } else {
-                showDialogMessage(Alert.AlertType.ERROR, "Não foi possível cadastrar o produto!");
+            if (produtoOriginal != null) {
+                produto.setId(produtoOriginal.getId());
             }
+
+            if (produtoOriginal != null) {
+                if (produtoRepository.editar(produto)) {
+                    showDialogMessage(Alert.AlertType.INFORMATION, "Produto alterado com sucesso!");
+                } else {
+                    showDialogMessage(Alert.AlertType.ERROR, "Não foi possível alterar o produto!");
+                }
+            } else {
+                if (produtoRepository.inserir(produto)) {
+                    showDialogMessage(Alert.AlertType.INFORMATION, "Produto cadastrado com sucesso!");
+                } else {
+                    showDialogMessage(Alert.AlertType.ERROR, "Não foi possível cadastrar o produto!");
+                }
+            }
+
+            Main.alterarJanela(Main.JANELA_PRODUTOS, aClass -> new JanelaProdutos(produtoRepository));
         } catch (SQLException | NumberFormatException e) {
             e.printStackTrace();
             showDialogMessage(Alert.AlertType.ERROR, e.getMessage());
@@ -48,6 +72,6 @@ public class JanelaAdicionarProduto extends JanelaBase {
 
     @FXML
     private void cancelar() {
-        Main.voltaJanelaPrincipal();
+        Main.alterarJanela(Main.JANELA_PRODUTOS, aClass -> new JanelaProdutos(produtoRepository));
     }
 }

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ezpos.gui.control.JanelaAdicionarFornecedor">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="2.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ezpos.gui.control.JanelaAdicionarFornecedor">
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
@@ -15,11 +15,32 @@
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Cadastro de Fornecedor" />
-   <TextField fx:id="tfCpfCnpj" promptText="CPF ou CNPJ" />
-   <TextField fx:id="tfNome" promptText="Nome Completo" />
-   <TextField fx:id="tfEndereco" promptText="Endereço" />
-   <TextField fx:id="tfTelefone" promptText="Telefone" />
-   <TextField fx:id="tfEmail" promptText="Email" />
+   <Label text="CPF ou CNPJ:" />
+   <TextField fx:id="tfCpfCnpj" promptText="CPF ou CNPJ">
+      <VBox.margin>
+         <Insets bottom="5.0" />
+      </VBox.margin>
+   </TextField>
+   <Label text="Nome Completo:" />
+   <TextField fx:id="tfNome" promptText="Nome Completo">
+      <VBox.margin>
+         <Insets bottom="5.0" />
+      </VBox.margin></TextField>
+   <Label text="Endereço:" />
+   <TextField fx:id="tfEndereco" promptText="Endereço (Opcional)">
+      <VBox.margin>
+         <Insets bottom="5.0" />
+      </VBox.margin></TextField>
+   <Label text="Telefone:" />
+   <TextField fx:id="tfTelefone" promptText="Telefone (Opcional)">
+      <VBox.margin>
+         <Insets bottom="5.0" />
+      </VBox.margin></TextField>
+   <Label text="Email:" />
+   <TextField fx:id="tfEmail" promptText="Email (Opcional)">
+      <VBox.margin>
+         <Insets bottom="5.0" />
+      </VBox.margin></TextField>
    <FlowPane alignment="CENTER_RIGHT" hgap="5.0">
       <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
       <Button defaultButton="true" mnemonicParsing="false" onAction="#salvar" text="Salvar" />

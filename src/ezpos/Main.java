@@ -18,6 +18,9 @@ import javafx.util.Callback;
 // VM Options: --module-path "C:\Java\OpenJFX\lib" --add-modules javafx.controls,javafx.fxml
 public class Main extends Application {
     public static final String JANELA_PRINCIPAL = "/fxml/janela_principal.fxml";
+    public static final String JANELA_CLIENTES = "/fxml/janela_clientes.fxml";
+    public static final String JANELA_FORNECEDORES = "/fxml/janela_fornecedores.fxml";
+    public static final String JANELA_PRODUTOS = "/fxml/janela_produtos.fxml";
     public static final String JANELA_ADICIONAR_CLIENTE = "/fxml/janela_adicionar_cliente.fxml";
     public static final String JANELA_ADICIONAR_FORNECEDOR = "/fxml/janela_adicionar_fornecedor.fxml";
     public static final String JANELA_ADICIONAR_PRODUTO = "/fxml/janela_adicionar_produto.fxml";

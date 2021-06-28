@@ -21,9 +21,22 @@ public class JanelaAdicionarFornecedor extends JanelaBase {
     private TextField tfEmail;
 
     private final FornecedorRepository fornecedorRepository;
+    private final Fornecedor fornecedorOriginal;
 
-    public JanelaAdicionarFornecedor(FornecedorRepository fornecedorRepository) {
+    public JanelaAdicionarFornecedor(FornecedorRepository fornecedorRepository, Fornecedor fornecedorOriginal) {
         this.fornecedorRepository = fornecedorRepository;
+        this.fornecedorOriginal = fornecedorOriginal;
+    }
+
+    @FXML
+    private void initialize() {
+        if (fornecedorOriginal != null) {
+            tfCpfCnpj.setText(fornecedorOriginal.getCpfCnpj());
+            tfNome.setText(fornecedorOriginal.getNome());
+            tfEndereco.setText(fornecedorOriginal.getEndereco());
+            tfTelefone.setText(fornecedorOriginal.getTelefone());
+            tfEmail.setText(fornecedorOriginal.getEmail());
+        }
     }
 
     @FXML
@@ -35,23 +48,34 @@ public class JanelaAdicionarFornecedor extends JanelaBase {
         String email = tfEmail.getText();
 
         Fornecedor fornecedor = new Fornecedor(cpfCnpj, nome, endereco, telefone, email);
+        if (fornecedorOriginal != null) {
+            fornecedor.setId(fornecedorOriginal.getId());
+        }
 
         try {
-            if (fornecedorRepository.inserir(fornecedor)) {
-                showDialogMessage(Alert.AlertType.INFORMATION, "Fornecedor cadastrado com sucesso!");
+            if (fornecedorOriginal != null) {
+                if (fornecedorRepository.editar(fornecedor)) {
+                    showDialogMessage(Alert.AlertType.INFORMATION, "Fornecedor alterado com sucesso!");
+                } else {
+                    showDialogMessage(Alert.AlertType.ERROR, "Não foi possível alterar o fornecedor!");
+                }
             } else {
-                showDialogMessage(Alert.AlertType.ERROR, "Não foi possível cadastrar o fornecedor!");
+                if (fornecedorRepository.inserir(fornecedor)) {
+                    showDialogMessage(Alert.AlertType.INFORMATION, "Fornecedor cadastrado com sucesso!");
+                } else {
+                    showDialogMessage(Alert.AlertType.ERROR, "Não foi possível cadastrar o fornecedor!");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
             showDialogMessage(Alert.AlertType.ERROR, e.getMessage());
         }
 
-        Main.voltaJanelaPrincipal();
+        Main.alterarJanela(Main.JANELA_FORNECEDORES, aClass -> new JanelaFornecedores(fornecedorRepository));
     }
 
     @FXML
     private void cancelar() {
-        Main.voltaJanelaPrincipal();
+        Main.alterarJanela(Main.JANELA_FORNECEDORES, aClass -> new JanelaFornecedores(fornecedorRepository));
     }
 }

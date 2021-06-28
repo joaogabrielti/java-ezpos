@@ -18,3 +18,4 @@ Semana 20-26/06
 Semana 27-03/06-07
 
 - Melhorias e Mudanças no Código e no Banco de Dados
+- Melhorias nas Janelas de Cadastro

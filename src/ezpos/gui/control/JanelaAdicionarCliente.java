@@ -21,9 +21,22 @@ public class JanelaAdicionarCliente extends JanelaBase {
     private TextField tfEmail;
 
     private final ClienteRepository clienteRepository;
+    private final Cliente clienteOriginal;
 
-    public JanelaAdicionarCliente(ClienteRepository clienteRepository) {
+    public JanelaAdicionarCliente(ClienteRepository clienteRepository, Cliente clienteOriginal) {
         this.clienteRepository = clienteRepository;
+        this.clienteOriginal = clienteOriginal;
+    }
+
+    @FXML
+    private void initialize() {
+        if (clienteOriginal != null) {
+            tfCpfCnpj.setText(clienteOriginal.getCpfCnpj());
+            tfNome.setText(clienteOriginal.getNome());
+            tfEndereco.setText(clienteOriginal.getEndereco());
+            tfTelefone.setText(clienteOriginal.getTelefone());
+            tfEmail.setText(clienteOriginal.getEmail());
+        }
     }
 
     @FXML
@@ -35,23 +48,34 @@ public class JanelaAdicionarCliente extends JanelaBase {
         String email = tfEmail.getText();
 
         Cliente cliente = new Cliente(cpfCnpj, nome, endereco, telefone, email);
+        if (clienteOriginal != null) {
+            cliente.setId(clienteOriginal.getId());
+        }
 
         try {
-            if (clienteRepository.inserir(cliente)) {
-                showDialogMessage(Alert.AlertType.INFORMATION, "Cliente cadastrado com sucesso!");
+            if (clienteOriginal != null) {
+                if (clienteRepository.editar(cliente)) {
+                    showDialogMessage(Alert.AlertType.INFORMATION, "Cliente alterado com sucesso!");
+                } else {
+                    showDialogMessage(Alert.AlertType.ERROR, "Não foi possível alterar o cliente!");
+                }
             } else {
-                showDialogMessage(Alert.AlertType.ERROR, "Não foi possível cadastrar o cliente!");
+                if (clienteRepository.inserir(cliente)) {
+                    showDialogMessage(Alert.AlertType.INFORMATION, "Cliente cadastrado com sucesso!");
+                } else {
+                    showDialogMessage(Alert.AlertType.ERROR, "Não foi possível cadastrar o cliente!");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
             showDialogMessage(Alert.AlertType.ERROR, e.getMessage());
         }
 
-        Main.voltaJanelaPrincipal();
+        Main.alterarJanela(Main.JANELA_CLIENTES, aClass -> new JanelaClientes(clienteRepository));
     }
 
     @FXML
     private void cancelar() {
-        Main.voltaJanelaPrincipal();
+        Main.alterarJanela(Main.JANELA_CLIENTES, aClass -> new JanelaClientes(clienteRepository));
     }
 }
