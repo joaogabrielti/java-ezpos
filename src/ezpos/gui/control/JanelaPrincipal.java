@@ -36,16 +36,24 @@ public class JanelaPrincipal extends JanelaBase {
 
     @FXML
     private void abrirJanelaAdicionarCompra() {
-        Main.alterarJanela(Main.JANELA_ADICIONAR_COMPRA, aClass -> new JanelaAdicionarCompra(compraRepository, fornecedorRepository, produtoRepository));
+        Main.alterarJanela(Main.JANELA_ADICIONAR_COMPRA, aClass -> new JanelaAdicionarCompra(compraRepository, fornecedorRepository, produtoRepository, null));
     }
 
     @FXML
     private void abrirJanelaAdicionarVenda() {
-        Main.alterarJanela(Main.JANELA_ADICIONAR_VENDA, aClass -> new JanelaAdicionarVenda(vendaRepository, clienteRepository, produtoRepository));
+        Main.alterarJanela(Main.JANELA_ADICIONAR_VENDA, aClass -> new JanelaAdicionarVenda(vendaRepository, clienteRepository, produtoRepository, null));
     }
 
     @FXML
     private void abrirJanelaRelatorioEstoque() {
         Main.alterarJanela(Main.JANELA_RELATORIO_ESTOQUE, aClass -> new JanelaRelatorioEstoque(produtoRepository));
+    }
+
+    public void abrirJanelaCompras() {
+        Main.alterarJanela(Main.JANELA_COMPRAS, aClass -> new JanelaCompras(compraRepository, fornecedorRepository, produtoRepository));
+    }
+
+    public void abrirJanelaVendas() {
+        Main.alterarJanela(Main.JANELA_VENDAS, aClass -> new JanelaVendas(vendaRepository, clienteRepository, produtoRepository));
     }
 }

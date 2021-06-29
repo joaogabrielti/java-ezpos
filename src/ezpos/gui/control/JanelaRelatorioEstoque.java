@@ -31,6 +31,7 @@ public class JanelaRelatorioEstoque extends JanelaBase {
         }
     }
 
+    @SuppressWarnings("EmptyMethod")
     @FXML
     private void imprimir() {
         // TODO("Impressão de relatórios não disponível.")

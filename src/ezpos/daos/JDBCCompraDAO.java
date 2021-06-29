@@ -32,10 +32,12 @@ public class JDBCCompraDAO implements CompraDAO {
             Fornecedor fornecedor = Main.getFornecedorDAO().buscar(rs.getInt("fornecedor_id"));
             Usuario usuario = Main.getUsuarioDAO().buscar(rs.getInt("usuario_id"));
             double valor = rs.getDouble("valor");
-            LocalDate data = LocalDate.parse(rs.getString("data"));
-            List<CompraItem> items = Main.getCompraItemDAO().listar(id);
+            LocalDate data = LocalDate.parse(rs.getString("data").substring(0, 10));
 
-            lista.add(new Compra(id, fornecedor, usuario, valor, data, items));
+            Compra compra = new Compra(id, fornecedor, usuario, valor, data, null);
+            List<CompraItem> items = Main.getCompraItemDAO().listar(compra);
+
+            lista.add(compra);
         }
 
         rs.close();
@@ -59,8 +61,10 @@ public class JDBCCompraDAO implements CompraDAO {
             Fornecedor fornecedor = Main.getFornecedorDAO().buscar(rs.getInt("fornecedor_id"));
             Usuario usuario = Main.getUsuarioDAO().buscar(rs.getInt("usuario_id"));
             double valor = rs.getDouble("valor");
-            LocalDate data = LocalDate.parse(rs.getString("data"));
-            List<CompraItem> items = Main.getCompraItemDAO().listar(id);
+            LocalDate data = LocalDate.parse(rs.getString("data").substring(0, 10));
+
+            Compra c = new Compra(id, fornecedor, usuario, valor, data, null);
+            List<CompraItem> items = Main.getCompraItemDAO().listar(c);
 
             compra = new Compra(id, fornecedor, usuario, valor, data, items);
         }

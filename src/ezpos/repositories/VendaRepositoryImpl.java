@@ -10,9 +10,11 @@ import java.sql.SQLException;
 
 public class VendaRepositoryImpl implements VendaRepository {
     private final ObservableList<Venda> vendas;
+    private final ObservableList<VendaItem> items;
 
     public VendaRepositoryImpl() {
         this.vendas = FXCollections.observableArrayList();
+        this.items = FXCollections.observableArrayList();
     }
 
     @Override
@@ -33,8 +35,20 @@ public class VendaRepositoryImpl implements VendaRepository {
     }
 
     @Override
+    public ObservableList<VendaItem> listarItems(Venda venda) throws SQLException {
+        this.items.clear();
+        this.items.addAll(Main.getVendaItemDAO().listar(venda));
+        return FXCollections.unmodifiableObservableList(this.items);
+    }
+
+    @Override
     public boolean inserirItem(VendaItem item) throws SQLException {
         return Main.getVendaItemDAO().inserir(item);
+    }
+
+    @Override
+    public boolean excluirItem(VendaItem item) throws SQLException {
+        return Main.getVendaItemDAO().excluir(item);
     }
 
     @Override

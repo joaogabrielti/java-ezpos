@@ -2,9 +2,7 @@ package ezpos.daos;
 
 import ezpos.daos.interfaces.UsuarioDAO;
 import ezpos.db.ConnectionManager;
-import ezpos.model.Cliente;
 import ezpos.model.Usuario;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

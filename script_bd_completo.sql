@@ -8,7 +8,7 @@ USE `ezpos`;
 DROP TABLE IF EXISTS `ezpos`.`produtos`;
 CREATE TABLE IF NOT EXISTS `ezpos`.`produtos` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
   `descricao` VARCHAR(100) NULL,
   `quantidade` FLOAT NOT NULL DEFAULT 0,
   `valor_compra` FLOAT NOT NULL,
@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS `ezpos`.`fornecedores`;
 CREATE TABLE IF NOT EXISTS `ezpos`.`fornecedores` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `cpf_cnpj` VARCHAR(20) NOT NULL,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
   `endereco` VARCHAR(100) NULL,
   `telefone` VARCHAR(100) NULL,
   `email` VARCHAR(100) NULL,
@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `ezpos`.`usuarios`;
 CREATE TABLE IF NOT EXISTS `ezpos`.`usuarios` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `usuario` VARCHAR(16) NOT NULL,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `senha` CHAR(64) NOT NULL,
   `admin` TINYINT NOT NULL,
@@ -73,12 +73,12 @@ CREATE TABLE IF NOT EXISTS `ezpos`.`compra_itens` (
   CONSTRAINT `fk_compra_itens_has_compras`
     FOREIGN KEY (`compra_id`)
     REFERENCES `ezpos`.`compras` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_compras_itens_has_produtos_idx`
     FOREIGN KEY (`produto_id`)
     REFERENCES `ezpos`.`produtos` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -86,7 +86,7 @@ DROP TABLE IF EXISTS `ezpos`.`clientes`;
 CREATE TABLE IF NOT EXISTS `ezpos`.`clientes` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `cpf_cnpj` VARCHAR(20) NOT NULL,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
   `endereco` VARCHAR(100) NULL,
   `telefone` VARCHAR(100) NULL,
   `email` VARCHAR(100) NULL,
@@ -128,12 +128,12 @@ CREATE TABLE IF NOT EXISTS `ezpos`.`venda_itens` (
   CONSTRAINT `fk_vendas_itens_has_vendas`
     FOREIGN KEY (`venda_id`)
     REFERENCES `ezpos`.`vendas` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_vendas_itens_has_produtos`
     FOREIGN KEY (`produto_id`)
     REFERENCES `ezpos`.`produtos` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -162,6 +162,17 @@ BEGIN
     DECLARE valor_total FLOAT;
     SELECT SUM(quantidade * valor) INTO valor_total FROM compra_itens WHERE compra_id = compra;
     RETURN valor_total;
+END $$
+
+DROP FUNCTION IF EXISTS fn_atualiza_estoque $$
+CREATE FUNCTION fn_atualiza_estoque(produto INT) RETURNS FLOAT DETERMINISTIC
+BEGIN
+    DECLARE entradas FLOAT;
+    DECLARE saidas FLOAT;
+    SELECT COALESCE(SUM(quantidade), 0) INTO entradas FROM compra_itens WHERE produto_id=produto;
+    SELECT COALESCE(SUM(quantidade), 0) INTO saidas FROM venda_itens WHERE produto_id=produto;
+    UPDATE produtos SET quantidade = entradas - saidas WHERE id=produto;
+    RETURN entradas - saidas;
 END $$
 
 DELIMITER ;

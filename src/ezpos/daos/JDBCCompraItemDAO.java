@@ -14,29 +14,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCCompraItemDAO implements CompraItemDAO {
-    private static final String INSERIR = "INSERT INTO compra_items(compra_id,produto_id,quantidade,valor) VALUES (?,?,?,?);";
-    private static final String EDITAR = "UPDATE compra_items SET quantidade=?, valor=? WHERE compra_id=? AND produto_id=?;";
-    private static final String EXCLUIR = "DELETE FROM compra_items WHERE compra_id=? AND produto_id=?;";
-    private static final String LISTAR = "SELECT * FROM compra_items WHERE compra_id=?;";
+    private static final String INSERIR = "INSERT INTO compra_itens(compra_id,produto_id,quantidade,valor) VALUES (?,?,?,?);";
+    private static final String EDITAR = "UPDATE compra_itens SET quantidade=?, valor=? WHERE compra_id=? AND produto_id=?;";
+    private static final String EXCLUIR = "DELETE FROM compra_itens WHERE compra_id=? AND produto_id=?;";
+    private static final String LISTAR = "SELECT * FROM compra_itens WHERE compra_id=?;";
 
     @Override
-    public List<CompraItem> listar(int compra) throws SQLException {
+    public List<CompraItem> listar(Compra compra) throws SQLException {
         ArrayList<CompraItem> lista = new ArrayList<>();
 
         Connection conn = ConnectionManager.getConnection();
 
         PreparedStatement stmt = conn.prepareStatement(LISTAR);
-        stmt.setInt(1, compra);
+        stmt.setInt(1, compra.getId());
 
         ResultSet rs = stmt.executeQuery();
 
         while (rs.next()) {
-            Compra c = Main.getCompraDAO().buscar(rs.getInt("compra_id"));
             Produto p = Main.getProdutoDAO().buscar(rs.getInt("produto_id"));
             double quantidade = rs.getDouble("quantidade");
             double valor = rs.getDouble("valor");
 
-            lista.add(new CompraItem(c, p, quantidade, valor));
+            lista.add(new CompraItem(compra, p, quantidade, valor));
         }
 
         rs.close();

@@ -10,4 +10,5 @@ public interface ProdutoDAO {
     boolean inserir(Produto produto) throws SQLException;
     boolean editar(Produto produto) throws SQLException;
     boolean excluir(Produto produto) throws SQLException;
+    boolean atualizarEstoque(Produto produto) throws SQLException;
 }

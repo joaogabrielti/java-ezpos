@@ -54,9 +54,9 @@ public abstract class Auth {
         Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
         loginButton.setDisable(true);
 
-        tfUsuario.textProperty().addListener((observable, oldValue, newValue) -> {
-            loginButton.setDisable(newValue.trim().isEmpty());
-        });
+        tfUsuario.textProperty().addListener((observable, oldValue, newValue) ->
+            loginButton.setDisable(newValue.trim().isEmpty())
+        );
 
         dialog.getDialogPane().setContent(grid);
 

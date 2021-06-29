@@ -10,9 +10,11 @@ import java.sql.SQLException;
 
 public class CompraRepositoryImpl implements CompraRepository {
     private final ObservableList<Compra> compras;
+    private final ObservableList<CompraItem> items;
 
     public CompraRepositoryImpl() {
         this.compras = FXCollections.observableArrayList();
+        this.items = FXCollections.observableArrayList();
     }
 
     @Override
@@ -33,8 +35,20 @@ public class CompraRepositoryImpl implements CompraRepository {
     }
 
     @Override
+    public ObservableList<CompraItem> listarItems(Compra compra) throws SQLException {
+        this.items.clear();
+        this.items.addAll(Main.getCompraItemDAO().listar(compra));
+        return FXCollections.unmodifiableObservableList(this.items);
+    }
+
+    @Override
     public boolean inserirItem(CompraItem item) throws SQLException {
         return Main.getCompraItemDAO().inserir(item);
+    }
+
+    @Override
+    public boolean excluirItem(CompraItem item) throws SQLException {
+        return Main.getCompraItemDAO().excluir(item);
     }
 
     @Override

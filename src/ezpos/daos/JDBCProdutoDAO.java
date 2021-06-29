@@ -16,6 +16,7 @@ public class JDBCProdutoDAO implements ProdutoDAO {
     private static final String EXCLUIR = "DELETE FROM produtos WHERE id=?;";
     private static final String LISTAR = "SELECT * FROM produtos;";
     private static final String BUSCAR = "SELECT * FROM produtos WHERE id=?;";
+    private static final String FN_ATUALIZA_ESTOQUE = "SELECT fn_atualiza_estoque(?);";
 
     @Override
     public List<Produto> listar() throws SQLException {
@@ -120,5 +121,20 @@ public class JDBCProdutoDAO implements ProdutoDAO {
         conn.close();
 
         return result == 1;
+    }
+
+    @Override
+    public boolean atualizarEstoque(Produto produto) throws SQLException {
+        Connection conn = ConnectionManager.getConnection();
+
+        PreparedStatement stmt = conn.prepareStatement(FN_ATUALIZA_ESTOQUE);
+        stmt.setInt(1, produto.getId());
+
+        boolean result = stmt.execute();
+
+        stmt.close();
+        conn.close();
+
+        return result;
     }
 }

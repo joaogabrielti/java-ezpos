@@ -19,3 +19,6 @@ Semana 27-03/06-07
 
 - Melhorias e Mudanças no Código e no Banco de Dados
 - Melhorias nas Janelas de Cadastro
+- Implementado exclusão de itens da compra/venda
+- Banco de Dados melhorado
+- Projeto Finalizado

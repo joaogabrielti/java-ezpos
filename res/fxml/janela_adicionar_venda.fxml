@@ -21,6 +21,7 @@
    <DatePicker fx:id="dtData" maxWidth="1.7976931348623157E308" />
    <FlowPane alignment="CENTER_RIGHT" hgap="5.0">
       <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+      <Button fx:id="btVerItens" disable="true" mnemonicParsing="false" onAction="#verItens" text="Ver Itens" />
       <Button defaultButton="true" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
    </FlowPane>
 </VBox>

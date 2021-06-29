@@ -14,7 +14,7 @@ import java.util.List;
 
 public class JDBCVendaDAO implements VendaDAO {
     private static final String INSERIR = "INSERT INTO vendas(cliente_id,usuario_id,valor,forma_pagamento,data) VALUES (?,?,?,?,?);";
-    private static final String EDITAR = "UPDATE vendas SET cliente_id=?, usuario_id=?, valor=?, data=? WHERE id=?;";
+    private static final String EDITAR = "UPDATE vendas SET cliente_id=?, usuario_id=?, valor=?, forma_pagamento=?, data=? WHERE id=?;";
     private static final String EXCLUIR = "DELETE FROM vendas WHERE id=?;";
     private static final String LISTAR = "SELECT * FROM vendas;";
 
@@ -32,10 +32,14 @@ public class JDBCVendaDAO implements VendaDAO {
             Usuario usuario = Main.getUsuarioDAO().buscar(rs.getInt("usuario_id"));
             double valor = rs.getDouble("valor");
             String formaPagamento = rs.getString("forma_pagamento");
-            LocalDate data = LocalDate.parse(rs.getString("data"));
-            List<VendaItem> items = Main.getVendaItemDAO().listar(id);
+            LocalDate data = LocalDate.parse(rs.getString("data").substring(0, 10));
 
-            lista.add(new Venda(id, cliente, usuario, valor, formaPagamento, data, items));
+            Venda v = new Venda(id, cliente, usuario, valor, formaPagamento, data, null);
+            List<VendaItem> items = Main.getVendaItemDAO().listar(v);
+
+            v.setItems(items);
+
+            lista.add(v);
         }
 
         rs.close();
@@ -57,8 +61,12 @@ public class JDBCVendaDAO implements VendaDAO {
             Usuario usuario = Main.getUsuarioDAO().buscar(rs.getInt("usuario_id"));
             double valor = rs.getDouble("valor");
             String formaPagamento = rs.getString("forma_pagamento");
-            LocalDate data = LocalDate.parse(rs.getString("data"));
-            List<VendaItem> items = Main.getVendaItemDAO().listar(id);
+            LocalDate data = LocalDate.parse(rs.getString("data").substring(0, 10));
+
+            Venda v = new Venda(id, cliente, usuario, valor, formaPagamento, data, null);
+            List<VendaItem> items = Main.getVendaItemDAO().listar(v);
+
+            v.setItems(items);
 
             venda = new Venda(id, cliente, usuario, valor, formaPagamento, data, items);
         }

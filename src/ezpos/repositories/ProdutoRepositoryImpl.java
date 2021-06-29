@@ -40,4 +40,9 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
     public boolean excluir(Produto produto) throws SQLException {
         return Main.getProdutoDAO().excluir(produto);
     }
+
+    @Override
+    public boolean atualizarEstoque(Produto produto) throws SQLException {
+        return !Main.getProdutoDAO().atualizarEstoque(produto);
+    }
 }

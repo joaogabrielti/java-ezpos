@@ -14,29 +14,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCVendaItemDAO implements VendaItemDAO {
-    private static final String INSERIR = "INSERT INTO venda_items(venda_id,produto_id,quantidade,valor) VALUES (?,?,?,?);";
-    private static final String EDITAR = "UPDATE venda_items SET quantidade=?, valor=? WHERE venda_id=? AND produto_id=?;";
-    private static final String EXCLUIR = "DELETE FROM venda_items WHERE venda_id=? AND produto_id=?;";
-    private static final String LISTAR = "SELECT * FROM venda_items WHERE venda_id=?;";
+    private static final String INSERIR = "INSERT INTO venda_itens(venda_id,produto_id,quantidade,valor) VALUES (?,?,?,?);";
+    private static final String EDITAR = "UPDATE venda_itens SET quantidade=?, valor=? WHERE venda_id=? AND produto_id=?;";
+    private static final String EXCLUIR = "DELETE FROM venda_itens WHERE venda_id=? AND produto_id=?;";
+    private static final String LISTAR = "SELECT * FROM venda_itens WHERE venda_id=?;";
 
     @Override
-    public List<VendaItem> listar(int venda) throws SQLException {
+    public List<VendaItem> listar(Venda venda) throws SQLException {
         ArrayList<VendaItem> lista = new ArrayList<>();
 
         Connection conn = ConnectionManager.getConnection();
 
         PreparedStatement stmt = conn.prepareStatement(LISTAR);
-        stmt.setInt(1, venda);
+        stmt.setInt(1, venda.getId());
 
         ResultSet rs = stmt.executeQuery();
 
         while (rs.next()) {
-            Venda v = Main.getVendaDAO().buscar(rs.getInt("venda_id"));
             Produto p = Main.getProdutoDAO().buscar(rs.getInt("produto_id"));
             double quantidade = rs.getDouble("quantidade");
             double valor = rs.getDouble("valor");
 
-            lista.add(new VendaItem(v, p, quantidade, valor));
+            lista.add(new VendaItem(venda, p, quantidade, valor));
         }
 
         rs.close();

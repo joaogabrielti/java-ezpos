@@ -9,7 +9,9 @@ public interface VendaRepository {
     ObservableList<Venda> listar() throws SQLException;
     Venda buscar(int id) throws SQLException;
     int inserir(Venda venda) throws SQLException;
+    ObservableList<VendaItem> listarItems(Venda venda) throws SQLException;
     boolean inserirItem(VendaItem item) throws SQLException;
+    boolean excluirItem(VendaItem item) throws SQLException;
     boolean editar(Venda venda) throws SQLException;
     boolean excluir(Venda venda) throws SQLException;
 }
